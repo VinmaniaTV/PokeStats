@@ -1,35 +1,59 @@
 <template>
   <section>
     <div id="container">
-      <form action="page d'inscription" method="post">
+      <form @submit.prevent="addUser">
         <h1>Inscription</h1>
 
         <div>
-          <label for="name">Nom* :</label>
-          <input type="text" id="name" name="user_name" required />
-        </div>
-        <div>
-          <label for="Prénom">Prénom*:</label>
-          <input type="e" id="Prénom" name="user_firstname" required />
-        </div>
-        <div>
-          <label for="mail">E-mail* :</label>
-          <input type="email" id="mail" name="user_mail" required />
-        </div>
-        <div>
           <label for="pseudo">Pseudo* :</label>
-          <input type="text" id="pseudo" name="user_pseudoname" required />
+          <input type="text" id="username" v-model="newUser.username" required />
         </div>
         <div>
-          <label for="Numéro">Numéro de Téléphone:</label>
-          <input type="text" id="Numéro" name="user_number" />
+          <label for="email">E-mail* :</label>
+          <input type="email" id="email" v-model="newUser.email" required />
+        </div>
+        <div>
+          <label for="name">Mot de passe* :</label>
+          <input type="password" id="password" v-model="newUser.password" required />
+        </div>
+        <div>
+          <label for="name">Confirmation mot de passe* :</label>
+          <input type="password" id="confirmationPassword" required />
         </div>
 
-        <input type="submit" value="S'inscrire"/>
+        <div>
+          <p id="errorMessage"></p>
+        </div>
+
+        <input type="submit" value="S'inscrire" />
       </form>
     </div>
   </section>
 </template>
+
+<script>
+module.exports = {
+  data() {
+    return {
+      newUser: {
+        username: "",
+        email: "",
+        password: "",
+      },
+    };
+  },
+  methods: {
+    addUser() {
+      if (document.getElementById('password').value == document.getElementById('confirmationPassword').value) {
+        this.$emit("add-user", this.newUser);
+      }
+      else {
+        document.getElementById('errorMessage').innerHTML = "Mot de passe non identique.";
+      }
+    },
+  },
+};
+</script>
 
 <style scoped>
 section {
@@ -44,13 +68,6 @@ section {
   justify-content: center;
   align-content: center;
   margin: 0 auto;
-}
-
-#image {
-  height: 150px;
-  width: 150px;
-  display: block;
-  margin: auto;
 }
 
 #container h1 {
@@ -96,7 +113,7 @@ label {
   /* Pour être sûrs que toutes les étiquettes ont même taille et sont correctement alignées */
   display: inline-block;
   color: black;
-  width: 90px;
+  width: 125px;
   text-align: right;
 }
 
@@ -127,5 +144,9 @@ textarea:focus {
 
 form div {
   margin: 20px;
+}
+
+p {
+  color: red;
 }
 </style>

@@ -26,6 +26,26 @@ var app = new Vue({
 
     },
     methods: {
-
+        async addUser(newUser) {
+            if (await axios.post('/api/register/', newUser)
+                .catch(function(error) {
+                    if (error.response.status === 400) {
+                        document.getElementById('errorMessage').innerHTML = "Le pseudo est déjà pris.";
+                    } else if (error.response.status === 401) {
+                        document.getElementById('errorMessage').innerHTML = "L'adresse email est déjà prise.";
+                    }
+                })) {
+                router.push('/')
+            }
+        },
+        async logIn(user) {
+            const res = await axios.post('/api/login/', user)
+                .catch(function(error) {
+                    if (error.response.status === 401) {
+                        console.log(error)
+                    }
+                })
+            this.connected = (res.data > 0 || res.data !== null);
+        }
     }
 })
