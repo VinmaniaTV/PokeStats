@@ -20,12 +20,33 @@ var app = new Vue({
     router,
     el: '#app',
     data: {
-
+        pokedex: []
     },
     async mounted() {
         const pokedex = await axios.get('api/pokedex')
+        this.pokedex = pokedex.data
     },
     methods: {
+        async updatePokemon(newPokemon) {
+            await axios.put('/api/pokemon/' + newPokemon.id, newPokemon)
+            const pokemon = this.pokedex.find(p => p.id === newPokemon.id)
+            pokemon.id = newPokemon.id;
+            pokemon.no = newPokemon.no;
+            pokemon.name = newPokemon.name;
+            pokemon.type1 = newPokemon.type1;
+            pokemon.type2 = newPokemon.type2;
+            pokemon.total = newPokemon.total;
+            pokemon.hp = newPokemon.hp;
+            pokemon.attack = newPokemon.attack;
+            pokemon.defense = newPokemon.defense;
+            pokemon.spatk = newPokemon.spatk;
+            pokemon.spdef = newPokemon.spdef;
+            pokemon.speed = newPokemon.speed;
+            pokemon.generation = newPokemon.generation;
+            pokemon.legendary = newPokemon.legendary;
+            pokemon.description = newPokemon.description;
+            pokemon.image = newPokemon.image;
+        },
         async addUser(newUser) {
             if (await axios.post('/api/register/', newUser)
                 .catch(function(error) {

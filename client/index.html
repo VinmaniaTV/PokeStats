@@ -53,7 +53,7 @@
         </header>
 
         <main>
-            <router-view @add-user="addUser" @log-in="logIn"></router-view>
+            <router-view :pokedex="pokedex" @update-pokemon="updatePokemon" @add-user="addUser" @log-in="logIn"></router-view>
         </main>
         <footer role="contentinfo" class="footer footer-default ">
             <div class="container">
