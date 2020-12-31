@@ -22,7 +22,7 @@
         </div>
 
         <div>
-          <p id="errorMessage"></p>
+          <p id="errorSignUpMessage"></p>
         </div>
 
         <input type="submit" value="S'inscrire" />
@@ -48,7 +48,7 @@ module.exports = {
         this.$emit("add-user", this.newUser);
       }
       else {
-        document.getElementById('errorMessage').innerHTML = "Mot de passe non identique.";
+        document.getElementById('errorSignUpMessage').innerHTML = "Mot de passe non identique.";
       }
     },
   },

@@ -6,10 +6,10 @@
       <form @submit.prevent="logIn">
         <h1>Connexion</h1>
 
-        <label><b>Nom d'utilisateur</b></label>
+        <label><b>Nom d'utilisateur ou E-mail</b></label>
         <input
           type="text"
-          v-model="user.email"
+          v-model="user.username"
           placeholder="Entrer le nom d'utilisateur"
           name="username"
           required
@@ -24,6 +24,10 @@
           required
         />
 
+        <div>
+          <p id="errorLogInMessage"></p>
+        </div>
+
         <input type="submit" id="submit" value="Connexion" />
       </form>
     </div>
@@ -33,14 +37,12 @@
 <script>
     module.exports = {
         props: {
-            articles: { type: Array, default: [] },
-            panier: { type: Object },
-            connected: { type: Boolean }
+
         },
         data () {
             return {
                 user: {
-                    email: '',
+                    username: '',
                     password: ''
                 }
             }
@@ -48,10 +50,6 @@
         methods: {
             logIn () {
               this.$emit('log-in', this.user)
-            },
-            
-            isRegistered () {
-              this.$emit('is-registered')
             }
         }
     }
@@ -116,5 +114,9 @@ input[type="submit"]:hover {
   background-color: white;
   color: #53af57;
   border: 1px solid #53af57;
+}
+
+p {
+  color: red;
 }
 </style>

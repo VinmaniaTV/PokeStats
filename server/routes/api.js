@@ -17,8 +17,8 @@ client.connect()
  * Cette route inscrit un utilisateur.
  */
 router.post('/register', async(req, res) => {
-    const username = req.body.username
-    const email = req.body.email
+    const username = req.body.username.toLowerCase();
+    const email = req.body.email.toLowerCase();
     const password = req.body.password
 
     const sqlUsername = "SELECT * FROM users WHERE username=$1"
@@ -63,27 +63,27 @@ router.post('/register', async(req, res) => {
  * Cette route permet de se connecter.
  */
 router.post('/login', async(req, res) => {
-    const email = req.body.email
+    const username = req.body.username.toLowerCase();
     const password = req.body.password
 
-    const sql = "SELECT * FROM users WHERE email=$1"
-    const checkEmail = await client.query({ // notez le "await" car la fonction est asynchrone
+    const sql = "SELECT * FROM users WHERE email=$1 OR username =$1"
+    const checkExists = await client.query({ // notez le "await" car la fonction est asynchrone
         text: sql,
-        values: [email]
+        values: [username]
     })
 
-    if (checkEmail.rowCount === 0) {
+    if (checkExists.rowCount === 0) {
         res.status(400).json({ message: 'user doesn\'t exists' })
         return
     }
 
-    if (await bcrypt.compare(password, checkEmail.rows[0].password)) {
-        req.session.userId = checkEmail.rows[0].id
+    if (await bcrypt.compare(password, checkExists.rows[0].password)) {
+        req.session.userId = checkExists.rows[0].id
             // on envoie le user ajouté à l'utilisateur
         res.json(req.session.userId)
         return
     } else {
-        res.status(401).json({ message: 'user already connected' })
+        res.status(401).json({ message: 'wrong password' })
         return
     }
 })
