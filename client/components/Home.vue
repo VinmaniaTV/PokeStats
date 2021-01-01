@@ -1,5 +1,6 @@
 <template>
   <div>
+    <navbar @log-out="logOut" :connected="connected"></navbar>
     <div id="showcase">
       <div>
         <h1>Bienvenue sur PokéStats</h1>
@@ -87,6 +88,24 @@
   </div>
 </template>
 
+<script>
+const Navbar = window.httpVueLoader("./components/Navbar.vue");
+module.exports = {
+  props: {
+    connected: { type: Boolean }
+  },
+  components: {
+    Navbar,
+  },
+  methods: {
+    logOut () {
+      this.$emit('log-out')
+    },
+  }
+}
+</script>
+
+
 <style scoped>
 #showcase {
   background: no-repeat url("../img/bgHome.png");
@@ -165,15 +184,3 @@ h4 {
   font-size: 30px;
 }
 </style>
-
-<script>
-module.exports = {
-  props: {
-    show: Boolean,
-  },
-  data() {
-    return {};
-  },
-  methods: {},
-};
-</script>

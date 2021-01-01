@@ -45,7 +45,7 @@ router.post('/register', async(req, res) => {
 
     const hash = await bcrypt.hash(password, 10)
     const addUserSql = 'INSERT INTO users (username, email, password) VALUES ($1, $2, $3)'
-    const addedUser = await client.query({ // notez le "await" car la fonction est asynchrone
+    await client.query({ // notez le "await" car la fonction est asynchrone
         text: addUserSql,
         values: [username, email, hash]
     })
@@ -56,7 +56,7 @@ router.post('/register', async(req, res) => {
     })
     req.session.userId = userData.rows[0].id
         // on envoie le user ajouté à l'utilisateur
-    res.json(addedUser)
+    res.json(userData.rows[0].id)
 })
 
 /**
@@ -86,6 +86,18 @@ router.post('/login', async(req, res) => {
         res.status(401).json({ message: 'wrong password' })
         return
     }
+})
+
+router.post('/logout', (req, res) => {
+    if (typeof req.session.userId === 'undefined' || req.session.userId === -1) {
+        res.status(401).json({ message: 'user not connected' })
+        return (res.json(req.session.userId))
+    } else {
+        req.session.destroy();
+        return res.status(200).json({ message: 'user disconnected' })
+    }
+
+
 })
 
 /**

@@ -1,38 +1,58 @@
 <template>
-  <section>
-    <div id="container">
-      <form @submit.prevent="addUser">
-        <h1>Inscription</h1>
+  <div>
+    <navbar @log-out="logOut" :connected="connected"></navbar>
+    <section>
+      <div id="container">
+        <form @submit.prevent="addUser">
+          <h1>Inscription</h1>
 
-        <div>
-          <label for="pseudo">Pseudo* :</label>
-          <input type="text" id="username" v-model="newUser.username" required />
-        </div>
-        <div>
-          <label for="email">E-mail* :</label>
-          <input type="email" id="email" v-model="newUser.email" required />
-        </div>
-        <div>
-          <label for="name">Mot de passe* :</label>
-          <input type="password" id="password" v-model="newUser.password" required />
-        </div>
-        <div>
-          <label for="name">Confirmation mot de passe* :</label>
-          <input type="password" id="confirmationPassword" required />
-        </div>
+          <div>
+            <label for="pseudo">Pseudo* :</label>
+            <input
+              type="text"
+              id="username"
+              v-model="newUser.username"
+              required
+            />
+          </div>
+          <div>
+            <label for="email">E-mail* :</label>
+            <input type="email" id="email" v-model="newUser.email" required />
+          </div>
+          <div>
+            <label for="name">Mot de passe* :</label>
+            <input
+              type="password"
+              id="password"
+              v-model="newUser.password"
+              required
+            />
+          </div>
+          <div>
+            <label for="name">Confirmation mot de passe* :</label>
+            <input type="password" id="confirmationPassword" required />
+          </div>
 
-        <div>
-          <p id="errorSignUpMessage"></p>
-        </div>
+          <div>
+            <p id="errorSignUpMessage"></p>
+          </div>
 
-        <input type="submit" value="S'inscrire" />
-      </form>
-    </div>
-  </section>
+          <input type="submit" value="S'inscrire" />
+        </form>
+      </div>
+    </section>
+  </div>
 </template>
 
 <script>
+const Navbar = window.httpVueLoader("./components/Navbar.vue");
 module.exports = {
+  components: {
+    Navbar,
+  },
+  props: {
+    connected: { type: Boolean }
+  },
   data() {
     return {
       newUser: {
@@ -44,13 +64,20 @@ module.exports = {
   },
   methods: {
     addUser() {
-      if (document.getElementById('password').value == document.getElementById('confirmationPassword').value) {
+      if (
+        document.getElementById("password").value ==
+        document.getElementById("confirmationPassword").value
+      ) {
         this.$emit("add-user", this.newUser);
-      }
-      else {
-        document.getElementById('errorSignUpMessage').innerHTML = "Mot de passe non identique.";
+        this.connected = true;
+      } else {
+        document.getElementById("errorSignUpMessage").innerHTML =
+          "Mot de passe non identique.";
       }
     },
+    logOut () {
+      this.$emit('log-out')
+    }
   },
 };
 </script>

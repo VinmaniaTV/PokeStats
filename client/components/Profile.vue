@@ -1,4 +1,6 @@
 <template>
+<div>
+  <navbar @log-out="logOut" :connected="connected"></navbar>
   <section>
     <h2>Mes Pokémons</h2>
     <div class="gauche">
@@ -61,6 +63,23 @@
     </div>
   </section>
 </template>
+
+<script>
+const Navbar = window.httpVueLoader("./components/Navbar.vue");
+module.exports = {
+  props: {
+    connected: { type: Boolean }
+  },
+  components: {
+    Navbar,
+  },
+  methods: {
+    logOut () {
+      this.$emit('log-out')
+    }
+  }
+}
+</script>
 
 <style scoped>
 div#first

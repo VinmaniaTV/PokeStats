@@ -20,7 +20,8 @@ var app = new Vue({
     router,
     el: '#app',
     data: {
-        pokedex: []
+        pokedex: [],
+        connected: false
     },
     async mounted() {
         const pokedex = await axios.get('api/pokedex')
@@ -65,6 +66,7 @@ var app = new Vue({
                         document.getElementById('errorSignUpMessage').innerHTML = "L'adresse email est déjà prise.";
                     }
                 })) {
+                this.connected = true;
                 router.push('/')
             }
         },
@@ -75,6 +77,18 @@ var app = new Vue({
                         document.getElementById('errorLogInMessage').innerHTML = "La combinaison est incorrecte.";
                     }
                 })) {
+                this.connected = true;
+                router.push('/')
+            }
+        },
+        async logOut() {
+            if (await axios.post('/api/logout/')
+                .catch(function(error) {
+                    if (error.response.status === 400 || error.response.status === 401) {
+                        console.log(error)
+                    }
+                })) {
+                this.connected = false;
                 router.push('/')
             }
         }

@@ -1,64 +1,75 @@
 <template>
-  <section>
-    <div id="container">
-      <!-- zone de connexion -->
+  <div>
+    <navbar @log-out="logOut" :connected="connected"></navbar>
+    <section>
+      <div id="container">
+        <!-- zone de connexion -->
 
-      <form @submit.prevent="logIn">
-        <h1>Connexion</h1>
+        <form @submit.prevent="logIn">
+          <h1>Connexion</h1>
 
-        <label><b>Nom d'utilisateur ou E-mail</b></label>
-        <input
-          type="text"
-          v-model="user.username"
-          placeholder="Entrer le nom d'utilisateur"
-          name="username"
-          required
-        />
+          <label><b>Nom d'utilisateur ou E-mail</b></label>
+          <input
+            type="text"
+            v-model="user.username"
+            placeholder="Entrer le nom d'utilisateur"
+            name="username"
+            required
+          />
 
-        <label><b>Mot de passe</b></label>
-        <input
-          type="password"
-          v-model="user.password"
-          placeholder="Entrer le mot de passe"
-          name="password"
-          required
-        />
+          <label><b>Mot de passe</b></label>
+          <input
+            type="password"
+            v-model="user.password"
+            placeholder="Entrer le mot de passe"
+            name="password"
+            required
+          />
 
-        <div>
-          <p id="errorLogInMessage"></p>
-        </div>
+          <div>
+            <p id="errorLogInMessage"></p>
+          </div>
 
-        <input type="submit" id="submit" value="Connexion" />
-      </form>
-    </div>
-  </section>
+          <input type="submit" id="submit" value="Connexion" />
+        </form>
+      </div>
+    </section>
+  </div>
 </template>
 
 <script>
-    module.exports = {
-        props: {
-
-        },
-        data () {
-            return {
-                user: {
-                    username: '',
-                    password: ''
-                }
-            }
-        },
-        methods: {
-            logIn () {
-              this.$emit('log-in', this.user)
-            }
-        }
+const Navbar = window.httpVueLoader("./components/Navbar.vue");
+module.exports = {
+  components: {
+    Navbar,
+  },
+  props: {
+    connected: { type: Boolean }
+  },
+  data() {
+    return {
+      user: {
+        username: "",
+        password: "",
+      },
+    };
+  },
+  methods: {
+    logIn() {
+      this.$emit("log-in", this.user);
+      this.connected = true;
+    },
+    logOut () {
+      this.$emit('log-out')
     }
+  },
+};
 </script>
 
 <style scoped>
 section {
   background: linear-gradient(#071e38, #040614);
-  height: calc(100vh - 371px);
+  height: calc(100vh - 305px);
   min-height: 500px;
   display: flex;
   align-items: center;
