@@ -130,11 +130,11 @@ router.get('/pokedex', async(req, res) => {
 })
 
 /**
- * Cette fonction fait en sorte de valider que l'article demandé par l'utilisateur
+ * Cette fonction fait en sorte de valider que le pokémon demandé par l'utilisateur
  * est valide. Elle est appliquée aux routes:
- * - GET /article/:articleId
- * - PUT /article/:articleId
- * - DELETE /article/:articleId
+ * - GET /article/:pokemonId
+ * - PUT /article/:pokemonId
+ * - DELETE /article/:pokemonId
  * Comme ces trois routes ont un comportement similaire, on regroupe leurs fonctionnalités communes dans un middleware
  */
 async function parsePokemon(req, res, next) {
@@ -221,10 +221,15 @@ router.route('/pokemon/:pokemonId')
     res.send()
 })
 
-.delete(parsePokemon, (req, res) => {
-    const index = pokedex.findIndex(p => p.id === req.pokemonId)
+.delete(parsePokemon, async(req, res) => {
+    const id = parseInt(req.params.pokemonId)
 
-    pokedex.splice(index, 1) // remove the article from the array
+    const sql = "DELETE FROM pokedex WHERE id = $1"
+    await client.query({ // notez le "await" car la fonction est asynchrone
+        text: sql,
+        values: [id]
+    })
+
     res.send()
 })
 

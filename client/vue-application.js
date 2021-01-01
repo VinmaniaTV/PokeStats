@@ -27,6 +27,11 @@ var app = new Vue({
         this.pokedex = pokedex.data
     },
     methods: {
+        async deletePokemon(pokemonId) {
+            await axios.delete('/api/pokemon/' + pokemonId)
+            const index = this.pokedex.findIndex(p => p.id === pokemonId)
+            this.pokedex.splice(index, 1)
+        },
         async updatePokemon(newPokemon) {
             await axios.put('/api/pokemon/' + newPokemon.id, newPokemon)
             const pokemon = this.pokedex.find(p => p.id === newPokemon.id)

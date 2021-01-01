@@ -124,6 +124,9 @@ module.exports = {
     };
   },
   methods: {
+    deletePokemon (pokemonId) {
+      this.$emit('delete-pokemon', pokemonId)
+    },
     editPokemon(pokemon) {
       this.editingPokemon.id = pokemon.id;
       this.editingPokemon.no = pokemon.no;
