@@ -3,14 +3,32 @@
     <nav>
       <h2>Pokédex</h2>
     </nav>
+    <add-pokemon @add-pokemon="addPokemon" :show="showNewPokemon"></add-pokemon>
+    <button @click="showNewPokemon = !showNewPokemon" v-if="!showNewPokemon">
+      Ajouter un nouveau Pokémon
+    </button>
+    <button @click="showNewPokemon = !showNewPokemon" v-else>Annuler</button>
     <article v-for="pokemon in pokedex" :key="pokemon.id">
-      <div class="pokemon-img">
-        <div :style="{ backgroundImage: 'url(' + pokemon.image + ')' }"></div>
-      </div>
       <div class="pokemon-content" v-if="editingPokemon.id !== pokemon.id">
-        <div class="pokemon-title">
-          <h2>No.{{ pokemon.no }}</h2>
-          <h2>{{ pokemon.name }}</h2>
+        <div class="pokemon-essential">
+          <div class="pokemon-title">
+            <h2>No.{{ pokemon.no }}</h2>
+            <h2>{{ pokemon.name }}</h2>
+          </div>
+          <div
+            class="pokemon-img"
+            v-if="
+              pokemon.image != null &&
+              pokemon.image != 'null' &&
+              pokemon.image != ''
+            "
+            :style="{ backgroundImage: 'url(' + pokemon.image + ')' }"
+          ></div>
+          <div
+            class="pokemon-img"
+            v-else
+            :style="{ backgroundImage: 'url(../img/unknownPokemon.png)' }"
+          ></div>
         </div>
         <h3>Type :</h3>
         <div class="pokemon-type">
@@ -96,7 +114,11 @@
 </template>
 
 <script>
+const AddPokemon = window.httpVueLoader("./components/AddPokemon.vue");
 module.exports = {
+  components: {
+    AddPokemon,
+  },
   props: {
     pokedex: { type: Array, default: [] },
   },
@@ -118,14 +140,18 @@ module.exports = {
         generation: -1,
         legendary: false,
         description: "",
-        image: ""
+        image: "",
       },
-      showForm: false,
+      showNewPokemon: false,
     };
   },
   methods: {
-    deletePokemon (pokemonId) {
-      this.$emit('delete-pokemon', pokemonId)
+    addPokemon(newPokemon) {
+      this.$emit("add-pokemon", newPokemon);
+      this.showNewPokemon = !this.showNewPokemon;
+    },
+    deletePokemon(pokemonId) {
+      this.$emit("delete-pokemon", pokemonId);
     },
     editPokemon(pokemon) {
       this.editingPokemon.id = pokemon.id;
@@ -145,11 +171,11 @@ module.exports = {
       this.editingPokemon.description = pokemon.description;
       this.editingPokemon.image = pokemon.image;
     },
-    sendEditPokemon () {
-      this.$emit('update-pokemon', this.editingPokemon)
-      this.abortEditPokemon()
+    sendEditPokemon() {
+      this.$emit("update-pokemon", this.editingPokemon);
+      this.abortEditPokemon();
     },
-    abortEditPokemon () {
+    abortEditPokemon() {
       this.editingPokemon = {
         id: -1,
         no: -1,
@@ -166,8 +192,8 @@ module.exports = {
         generation: -1,
         legendary: false,
         description: "",
-        image: ""
-      }
+        image: "",
+      };
     },
   },
 };
@@ -249,6 +275,12 @@ a.nav {
 .pokemon-title h2 {
   margin: 10px;
   font-size: 20px;
+}
+
+.pokemon-img {
+  width: 80px;
+  height: 80px;
+  background-size: cover;
 }
 
 .pokemon-type {

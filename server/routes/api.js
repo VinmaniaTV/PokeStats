@@ -130,6 +130,52 @@ router.get('/pokedex', async(req, res) => {
 })
 
 /**
+ * Cette route crée un pokémon.
+ * WARNING: dans un vrai site, elle devrait être authentifiée et valider que l'utilisateur est bien autorisé
+ */
+router.post('/pokemon', async(req, res) => {
+    const no = parseInt(req.body.no)
+    const name = req.body.name
+    const type1 = req.body.type1
+    const type2 = (req.body.type2 == ("" || null) ? null : req.body.type2)
+    const total = parseInt(req.body.total)
+    const hp = parseInt(req.body.hp)
+    const attack = parseInt(req.body.attack)
+    const defense = parseInt(req.body.defense)
+    const spatk = parseInt(req.body.spatk)
+    const spdef = parseInt(req.body.spdef)
+    const speed = parseInt(req.body.speed)
+    const generation = parseInt(req.body.generation)
+    const legendary = req.body.legendary
+    const description = req.body.description
+    const image = req.body.image
+
+    // vérification de la validité des données d'entrée
+    if (isNaN(no) || no < 1 ||
+        typeof name !== 'string' || name === '' ||
+        typeof type1 !== 'string' || type1 === '' ||
+        typeof image !== 'string') {
+        res.status(400).json({ message: 'bad request' })
+        return
+    }
+
+    const sqlInsert = "INSERT INTO pokedex (no, name, type1, type2, total, hp, attack, defense, spatk, spdef, speed, generation, legendary, description, image) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15)"
+    await client.query({ // notez le "await" car la fonction est asynchrone
+        text: sqlInsert,
+        values: [no, name, type1, type2, total, hp, attack, defense, spatk, spdef, speed, generation, legendary, description, image]
+    })
+
+    const sqlSelect = "SELECT * FROM pokedex WHERE id = (SELECT MAX(id) FROM pokedex)"
+    const pokemonSQL = await client.query({ // notez le "await" car la fonction est asynchrone
+        text: sqlSelect,
+        values: []
+    })
+
+    // on envoie le pokémon ajouté à l'utilisateur
+    res.json(pokemonSQL.rows[0])
+})
+
+/**
  * Cette fonction fait en sorte de valider que le pokémon demandé par l'utilisateur
  * est valide. Elle est appliquée aux routes:
  * - GET /article/:pokemonId
@@ -140,12 +186,12 @@ router.get('/pokedex', async(req, res) => {
 async function parsePokemon(req, res, next) {
     const pokemonId = parseInt(req.params.pokemonId)
 
-    // si articleId n'est pas un nombre (NaN = Not A Number), alors on s'arrête
+    // si pokemonId n'est pas un nombre (NaN = Not A Number), alors on s'arrête
     if (isNaN(pokemonId)) {
         res.status(400).json({ message: 'pokemonId should be a number' })
         return
     }
-    // on affecte req.articleId pour l'exploiter dans toutes les routes qui en ont besoin
+    // on affecte req.pokemonId pour l'exploiter dans toutes les routes qui en ont besoin
     req.pokemonId = pokemonId
 
     const sql = "SELECT * FROM pokedex WHERE id = $1"
