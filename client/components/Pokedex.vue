@@ -15,7 +15,7 @@
       <button @click="showNewPokemon = !showNewPokemon" v-else>Annuler</button>
       <article v-for="pokemon in pokedex" :key="pokemon.id">
         <div class="pokemon-content" v-if="editingPokemon.id !== pokemon.id">
-          <div class="pokemon-essential">
+          <router-link class="pokemon-essential" :to="'/pokemon/' + pokemon.id">
             <div class="pokemon-title">
               <h2>No.{{ pokemon.no }}</h2>
               <h2>{{ pokemon.name }}</h2>
@@ -34,7 +34,7 @@
               v-else
               :style="{ backgroundImage: 'url(../img/unknownPokemon.png)' }"
             ></div>
-          </div>
+          </router-link>
           <h3>Type :</h3>
           <div class="pokemon-type">
             <div
@@ -61,7 +61,7 @@
         <div class="pokemon-content" v-else>
           <div class="pokemon-title">
             <h2>
-              No. <input type="number" v-model="editingPokemon.no" /> -
+              No. <input type="number" v-model="editingPokemon.no" min="1" /> -
               <input type="text" v-model="editingPokemon.name" />
             </h2>
           </div>

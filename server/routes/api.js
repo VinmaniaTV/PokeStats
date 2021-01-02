@@ -13,6 +13,14 @@ const client = new Client({
 
 client.connect()
 
+class Team {
+    constructor() {
+        this.createdAt = new Date()
+        this.updatedAt = new Date()
+        this.pokemons = []
+    }
+}
+
 /**
  * Cette route inscrit un utilisateur.
  */
@@ -66,9 +74,9 @@ router.post('/login', async(req, res) => {
     const username = req.body.username.toLowerCase();
     const password = req.body.password
 
-    const sql = "SELECT * FROM users WHERE email=$1 OR username =$1"
+    const sqlUser = "SELECT * FROM users WHERE email=$1 OR username =$1"
     const checkExists = await client.query({ // notez le "await" car la fonction est asynchrone
-        text: sql,
+        text: sqlUser,
         values: [username]
     })
 
@@ -79,8 +87,37 @@ router.post('/login', async(req, res) => {
 
     if (await bcrypt.compare(password, checkExists.rows[0].password)) {
         req.session.userId = checkExists.rows[0].id
-            // on envoie le user ajouté à l'utilisateur
-        res.json(req.session.userId)
+        req.session.team = new Team()
+        const sqlTeam = "SELECT * FROM pc INNER JOIN pokedex ON pc.pokemonid = pokedex.id WHERE userid=$1"
+        const team = await client.query({ // notez le "await" car la fonction est asynchrone
+            text: sqlTeam,
+            values: [req.session.userId]
+        })
+        team.rows.forEach(row => {
+            const pokemon = {
+                id: row.pokemonid,
+                no: row.no,
+                name: row.name,
+                type1: row.type1,
+                type2: row.type2,
+                total: row.total,
+                hp: row.hp,
+                attack: row.attack,
+                defense: row.defense,
+                spatk: row.spatk,
+                spdef: row.spdef,
+                speed: row.speed,
+                generation: row.generation,
+                legendary: row.legendary,
+                description: row.description,
+                image: row.image,
+                nickname: row.nickname
+            }
+            req.session.team.pokemons.push(pokemon)
+        });
+        console.log(req.session.team)
+            // on envoie la team de pokémons du user au client.
+        res.json(req.session.team)
         return
     } else {
         res.status(401).json({ message: 'wrong password' })

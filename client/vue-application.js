@@ -3,6 +3,7 @@ const LogIn = window.httpVueLoader('./components/LogIn.vue')
 const SignUp = window.httpVueLoader('./components/SignUp.vue')
 const Pokedex = window.httpVueLoader('./components/Pokedex.vue')
 const Profile = window.httpVueLoader('./components/Profile.vue')
+const Pokemon = window.httpVueLoader('./components/Pokemon.vue')
 
 const routes = [
     { path: '/', component: Home },
@@ -10,6 +11,7 @@ const routes = [
     { path: '/signup', component: SignUp },
     { path: '/pokedex', component: Pokedex },
     { path: '/me', component: Profile },
+    { path: '/pokemon/:id', component: Pokemon },
 ]
 
 const router = new VueRouter({

@@ -59,22 +59,21 @@
 <script>
 module.exports = {
   props: {
-    connected: { type: Boolean }
+    connected: { type: Boolean },
   },
   data() {
-    return {
-      
-    };
+    return {};
   },
   methods: {
-      logOut () {
-        this.$emit('log-out')
-      },
+    logOut() {
+      this.$emit("log-out");
+    },
   },
 };
 </script>
 
-<style scoped>
+<style scoped lang="css" src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"></style>
+<style>
 /* navbar */
 
 header nav {
@@ -138,5 +137,12 @@ header div {
 
 .navbar .nav-item .nav-link:first-letter {
   color: #f93d32;
+}
+
+.navbar-toggler-icon img {
+  height: 100%;
+}
+#navbarNavDropdown {
+  background-color: #282828;
 }
 </style>
