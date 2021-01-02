@@ -23,7 +23,7 @@
 <body>
     <div id="app">
         <main>
-            <router-view :pokedex="pokedex" :connected="connected" @add-pokemon="addPokemon" @delete-pokemon="deletePokemon" @update-pokemon="updatePokemon" @add-user="addUser" @log-in="logIn" @log-out="logOut"></router-view>
+            <router-view :pokedex="pokedex" :team="team" :connected="connected" @add-pokemon="addPokemon" @delete-pokemon="deletePokemon" @update-pokemon="updatePokemon" @update-nickname="updateNickname" @add-user="addUser" @log-in="logIn" @log-out="logOut"></router-view>
         </main>
         <footer role="contentinfo" class="footer footer-default">
             <div class="container">

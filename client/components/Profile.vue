@@ -1,107 +1,162 @@
 <template>
-<div>
-  <navbar @log-out="logOut" :connected="connected"></navbar>
-  <section>
-    <h2>Mes Pokémons</h2>
-    <div class="gauche">
-      <form>
-        <h3>Vos informations</h3>
-        <h6>Mon prénom</h6>
-        <input
-          type="text"
-          id="prenom"
-          name="user_prenom"
-          placeholder="mon prénom"
-          class="clean1"
-        />
-        <h6>Mon nom</h6>
-        <input
-          type="text"
-          id="nom"
-          name="user_nom"
-          placeholder="mon Nom"
-          class="clean2"
-        />
-        <h6>Mon adresse e-mail</h6>
-        <input
-          id="email"
-          name="email_message"
-          placeholder=" mon email"
-          class="clean3"
-        />
-        <h6>Mon Username</h6>
-        <input
-          type="text"
-          name="username"
-          placeholder="Identifiant utilisateur"
-          class="clean4"
-        />
-        <h6>Mot de passe actuel</h6>
-        <input
-          type="text"
-          name="actual_password"
-          placeholder="Mot de passe"
-          class="clean5"
-        />
-        <h6>Nouveau mot de passe</h6>
-        <input
-          type="text"
-          name="new_mdp"
-          placeholder="Saisissez votre nouveau mot de passe"
-          class="clean6"
-        />
-        <h6>Veuillez saisir une seconde fois votre nouveau mot de passe</h6>
-        <input type="text" name="new_mdp2" placeholder="" class="clean7" />
-        <br> 
-        <input
-          type="button"
-          value="Valider les modifications"
-          id="valider_modifs"
-          class="clean8"
-        /> 
-      </form>
-    </div>
-  </section>
+  <div>
+    <navbar @log-out="logOut" :connected="connected"></navbar>
+    <section>
+      <h2>Mes Pokémons</h2>
+      <article v-for="pokemon in team.pokemons" :key="pokemon.teamid">
+        <div class="pokemon-content" v-if="editingNickname.id !== pokemon.teamid">
+          <router-link class="pokemon-essential" :to="'/pokemon/' + pokemon.id">
+            <div class="pokemon-nickname">
+              <h2 v-if="pokemon.nickname !== null && pokemon.nickname !== ''">{{ pokemon.nickname }}</h2>
+              <h2 v-else>{{ pokemon.name }}</h2>
+            </div>
+            <div
+              class="pokemon-img"
+              v-if="
+                pokemon.image != null &&
+                pokemon.image != 'null' &&
+                pokemon.image != ''
+              "
+              :style="{ backgroundImage: 'url(' + pokemon.image + ')' }"
+            ></div>
+            <div
+              class="pokemon-img"
+              v-else
+              :style="{ backgroundImage: 'url(../img/unknownPokemon.png)' }"
+            ></div>
+          </router-link>
+          <button @click="editNickname(pokemon)">Modifier le surnom</button>
+          <h3>Type :</h3>
+          <div class="pokemon-title">
+              <h2>No.{{ pokemon.no }}</h2>
+              <h2>{{ pokemon.name }}</h2>
+            </div>
+          <div class="pokemon-type">
+            <div
+              class="type"
+              :style="{
+                backgroundImage:
+                  'url(\'../img/type/' + pokemon.type1 + '.png\')',
+              }"
+            ></div>
+            <div
+              class="type"
+              v-if="pokemon.type2 !== null"
+              :style="{
+                backgroundImage:
+                  'url(\'../img/type/' + pokemon.type2 + '.png\')',
+              }"
+            ></div>
+          </div>
+        </div>
+        <div class="pokemon-content" v-else>
+          <div class="pokemon-essential">
+            <div class="pokemon-nickname">
+              <input type="text" v-model="editingNickname.nickname">
+            </div>
+            <div
+              class="pokemon-img"
+              v-if="
+                pokemon.image != null &&
+                pokemon.image != 'null' &&
+                pokemon.image != ''
+              "
+              :style="{ backgroundImage: 'url(' + pokemon.image + ')' }"
+            ></div>
+            <div
+              class="pokemon-img"
+              v-else
+              :style="{ backgroundImage: 'url(../img/unknownPokemon.png)' }"
+            ></div>
+          </div>
+          <button @click="sendEditNickname()">Valider</button>
+          <button @click="abortEditNickname()">Annuler</button>
+          <h3>Type :</h3>
+          <div class="pokemon-title">
+              <h2>No.{{ pokemon.no }}</h2>
+              <h2>{{ pokemon.name }}</h2>
+            </div>
+          <div class="pokemon-type">
+            <div
+              class="type"
+              :style="{
+                backgroundImage:
+                  'url(\'../img/type/' + pokemon.type1 + '.png\')',
+              }"
+            ></div>
+            <div
+              class="type"
+              v-if="pokemon.type2 !== null"
+              :style="{
+                backgroundImage:
+                  'url(\'../img/type/' + pokemon.type2 + '.png\')',
+              }"
+            ></div>
+          </div>
+        </div>
+      </article>
+    </section>
+  </div>
 </template>
 
 <script>
 const Navbar = window.httpVueLoader("./components/Navbar.vue");
 module.exports = {
   props: {
-    connected: { type: Boolean }
+    team: { type: Object },
+    connected: { type: Boolean },
   },
   components: {
     Navbar,
   },
+  data() {
+    return {
+      editingNickname: {
+        id: -1,
+        nickname: '',
+      }
+    };
+  },
   methods: {
-    logOut () {
-      this.$emit('log-out')
-    }
-  }
-}
+    logOut() {
+      this.$emit("log-out");
+    },
+    editNickname (pokemon) {
+      this.editingNickname.id = pokemon.teamid
+      this.editingNickname.nickname = pokemon.nickname
+    },
+    sendEditNickname () {
+      this.$emit('update-nickname', this.editingNickname)
+      this.abortEditNickname()
+    },
+    abortEditNickname () {
+      this.editingNickname = {
+        id: -1,
+        nickname: ''
+      }
+    },
+  },
+};
 </script>
 
 <style scoped>
-div#first
-{
+div#first {
   background-color: rgb(141, 128, 128);
 }
 div#first div {
   display: inline-block;
   width: 48%;
 }
-div#first div.gauche
-{
+div#first div.gauche {
   background-color: rgb(185, 178, 178);
 }
-div#first div.droite
-{
+div#first div.droite {
   vertical-align: top;
 }
-div#first div h6, h3, input
-{
+div#first div h6,
+h3,
+input {
   margin-left: 35px;
   margin-bottom: 10px;
 }
-
 </style>

@@ -131,7 +131,7 @@ module.exports = {
   },
   props: {
     pokedex: { type: Array, default: [] },
-    connected: { type: Boolean }
+    connected: { type: Boolean },
   },
   data() {
     return {
@@ -206,9 +206,9 @@ module.exports = {
         image: "",
       };
     },
-    logOut () {
-      this.$emit('log-out')
-    }
+    logOut() {
+      this.$emit("log-out");
+    },
   },
 };
 </script>

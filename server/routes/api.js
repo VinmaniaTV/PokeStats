@@ -88,7 +88,7 @@ router.post('/login', async(req, res) => {
     if (await bcrypt.compare(password, checkExists.rows[0].password)) {
         req.session.userId = checkExists.rows[0].id
         req.session.team = new Team()
-        const sqlTeam = "SELECT * FROM pc INNER JOIN pokedex ON pc.pokemonid = pokedex.id WHERE userid=$1"
+        const sqlTeam = "SELECT pc.id AS teamid, * FROM pc INNER JOIN pokedex ON pc.pokemonid = pokedex.id WHERE userid=$1"
         const team = await client.query({ // notez le "await" car la fonction est asynchrone
             text: sqlTeam,
             values: [req.session.userId]
@@ -96,6 +96,7 @@ router.post('/login', async(req, res) => {
         team.rows.forEach(row => {
             const pokemon = {
                 id: row.pokemonid,
+                teamid: row.teamid,
                 no: row.no,
                 name: row.name,
                 type1: row.type1,
@@ -135,6 +136,80 @@ router.post('/logout', (req, res) => {
     }
 
 
+})
+
+/**
+ * Cette fonction fait en sorte de valider que le pokémon stocké dans le pc demandé par l'utilisateur
+ * est valide. Elle est appliquée aux routes:
+ * - GET /pc/:pcId
+ * - PUT /pc/:pcId
+ * - DELETE /pc/:pcId
+ * Comme ces trois routes ont un comportement similaire, on regroupe leurs fonctionnalités communes dans un middleware
+ */
+async function parsePc(req, res, next) {
+    const pcId = parseInt(req.params.pcId)
+
+    // si pcId n'est pas un nombre (NaN = Not A Number), alors on s'arrête
+    if (isNaN(pcId)) {
+        res.status(400).json({ message: 'pcId should be a number' })
+        return
+    }
+    // on affecte req.pcId pour l'exploiter dans toutes les routes qui en ont besoin
+    req.pcId = pcId
+
+    const sql = "SELECT * FROM pokedex WHERE id = $1"
+    const pokemonSQL = await client.query({ // notez le "await" car la fonction est asynchrone
+        text: sql,
+        values: [pcId]
+    })
+
+    const pc = pokemonSQL.rows[0]
+
+    if (!pokemonSQL.rowCount === 0) {
+        res.status(404).json({ message: 'pokemon in pc ' + pcId + ' does not exist' })
+        return
+    }
+    // on affecte req.pc pour l'exploiter dans toutes les routes qui en ont besoin
+    req.pc = pc
+    next()
+}
+
+router.route('/pc/:pcId')
+    /**
+     * Cette route envoie un pokémon stocké dans le pc particulier
+     */
+    .get(parsePc, (req, res) => {
+        // req.pc existe grâce au middleware parsePokemon
+        res.json(req.pc)
+    })
+
+/**
+ * Cette route modifie un pokémon dans le pc.
+ */
+.put(parsePc, async(req, res) => {
+    const id = req.body.id;
+    const nickname = req.body.nickname;
+
+    const sql = "UPDATE pc SET nickname = $2 WHERE id = $1"
+    await client.query({ // notez le "await" car la fonction est asynchrone
+        text: sql,
+        values: [id, nickname]
+    })
+
+    req.pc.nickname = nickname
+    res.send()
+})
+
+.delete(parsePc, async(req, res) => {
+    const id = parseInt(req.params.pcId)
+
+    const sql = "DELETE FROM pc WHERE id = $1"
+    await client.query({ // notez le "await" car la fonction est asynchrone
+        text: sql,
+        values: [id]
+    })
+
+    res.send()
 })
 
 /**
@@ -227,9 +302,9 @@ router.post('/pokemon', async(req, res) => {
 /**
  * Cette fonction fait en sorte de valider que le pokémon demandé par l'utilisateur
  * est valide. Elle est appliquée aux routes:
- * - GET /article/:pokemonId
- * - PUT /article/:pokemonId
- * - DELETE /article/:pokemonId
+ * - GET /pokemon/:pokemonId
+ * - PUT /pokemon/:pokemonId
+ * - DELETE /pokemon/:pokemonId
  * Comme ces trois routes ont un comportement similaire, on regroupe leurs fonctionnalités communes dans un middleware
  */
 async function parsePokemon(req, res, next) {
@@ -255,7 +330,7 @@ async function parsePokemon(req, res, next) {
         res.status(404).json({ message: 'pokemon ' + pokemonId + ' does not exist' })
         return
     }
-    // on affecte req.article pour l'exploiter dans toutes les routes qui en ont besoin
+    // on affecte req.pokemon pour l'exploiter dans toutes les routes qui en ont besoin
     req.pokemon = pokemon
     next()
 }
@@ -291,7 +366,7 @@ router.route('/pokemon/:pokemonId')
     const description = req.body.description
     const image = req.body.image
 
-    const sql = "UPDATE pokedex SET no =$2, name = $3, type1 = $4, type2 = $5, total = $6, hp = $7, attack = $8, defense = $9, spatk = $10, spdef =$11, speed = $12, generation = $13, legendary = $14, description = $15, image = $16 WHERE id = $1"
+    const sql = "UPDATE pokedex SET no = $2, name = $3, type1 = $4, type2 = $5, total = $6, hp = $7, attack = $8, defense = $9, spatk = $10, spdef =$11, speed = $12, generation = $13, legendary = $14, description = $15, image = $16 WHERE id = $1"
     await client.query({ // notez le "await" car la fonction est asynchrone
         text: sql,
         values: [id, no, name, type1, type2, total, hp, attack, defense, spatk, spdef, speed, generation, legendary, description, image]

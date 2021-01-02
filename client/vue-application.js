@@ -23,6 +23,7 @@ var app = new Vue({
     el: '#app',
     data: {
         pokedex: [],
+        team: [],
         connected: false
     },
     async mounted() {
@@ -59,6 +60,12 @@ var app = new Vue({
             pokemon.description = newPokemon.description;
             pokemon.image = newPokemon.image;
         },
+        async updateNickname(newPokemon) {
+            console.log(newPokemon)
+            await axios.put('/api/pc/' + newPokemon.id, newPokemon)
+            const pokemon = this.team.pokemons.find(p => p.teamid === newPokemon.id)
+            pokemon.nickname = newPokemon.nickname;
+        },
         async addUser(newUser) {
             if (await axios.post('/api/register/', newUser)
                 .catch(function(error) {
@@ -73,12 +80,14 @@ var app = new Vue({
             }
         },
         async logIn(user) {
-            if (await axios.post('/api/login/', user)
+            const userTeam = await axios.post('/api/login/', user)
                 .catch(function(error) {
                     if (error.response.status === 400 || error.response.status === 401) {
                         document.getElementById('errorLogInMessage').innerHTML = "La combinaison est incorrecte.";
                     }
-                })) {
+                })
+            if (userTeam.status === 200) {
+                this.team = userTeam.data;
                 this.connected = true;
                 router.push('/')
             }
