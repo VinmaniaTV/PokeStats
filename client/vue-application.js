@@ -66,6 +66,19 @@ var app = new Vue({
             const pokemon = this.team.pokemons.find(p => p.teamid === newPokemon.id)
             pokemon.nickname = newPokemon.nickname;
         },
+        async removeFromPc(pokemonId) {
+            await axios.delete('/api/pc/' + pokemonId)
+            const index = this.team.pokemons.findIndex(p => p.teamid === pokemonId)
+            console.log(index)
+            this.team.pokemons.splice(index, 1)
+        },
+        async addToPc(pokemonId) {
+            var pokemon = {
+                id: pokemonId
+            }
+            const res = await axios.post('/api/pc', pokemon)
+            this.team.pokemons.push(res.data)
+        },
         async addUser(newUser) {
             if (await axios.post('/api/register/', newUser)
                 .catch(function(error) {

@@ -48,6 +48,7 @@
               }"
             ></div>
           </div>
+          <button @click="removeFromPc(pokemon.teamid)">Retirer du PC</button>
         </div>
         <div class="pokemon-content" v-else>
           <div class="pokemon-essential">
@@ -135,6 +136,9 @@ module.exports = {
         nickname: ''
       }
     },
+    removeFromPc (pokemonId) {
+      this.$emit('remove-from-pc', pokemonId)
+    }
   },
 };
 </script>

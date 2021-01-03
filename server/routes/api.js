@@ -116,8 +116,7 @@ router.post('/login', async(req, res) => {
             }
             req.session.team.pokemons.push(pokemon)
         });
-        console.log(req.session.team)
-            // on envoie la team de pokémons du user au client.
+        // on envoie la team de pokémons du user au client.
         res.json(req.session.team)
         return
     } else {
@@ -136,6 +135,53 @@ router.post('/logout', (req, res) => {
     }
 
 
+})
+
+/**
+ * Cette route ajoute un pokemon dans le pc en l'associant à l'utilisateur.
+ */
+router.post('/pc', async(req, res) => {
+    console.log(req.body)
+    const pokemonId = parseInt(req.body.id)
+    const userId = req.session.userId
+
+    const sqlInsert = "INSERT INTO pc (userid, pokemonid) VALUES ($1, $2)"
+    await client.query({ // notez le "await" car la fonction est asynchrone
+        text: sqlInsert,
+        values: [userId, pokemonId]
+    })
+
+    const sqlTeam = "SELECT pc.id AS teamid, * FROM pc INNER JOIN pokedex ON pc.pokemonid = pokedex.id WHERE userid = $1 AND pokemonid = $2 ORDER BY pc.id DESC"
+    const team = await client.query({ // notez le "await" car la fonction est asynchrone
+        text: sqlTeam,
+        values: [req.session.userId, pokemonId]
+    })
+
+    const pokemon = {
+        id: team.rows[0].pokemonid,
+        teamid: team.rows[0].teamid,
+        no: team.rows[0].no,
+        name: team.rows[0].name,
+        type1: team.rows[0].type1,
+        type2: team.rows[0].type2,
+        total: team.rows[0].total,
+        hp: team.rows[0].hp,
+        attack: team.rows[0].attack,
+        defense: team.rows[0].defense,
+        spatk: team.rows[0].spatk,
+        spdef: team.rows[0].spdef,
+        speed: team.rows[0].speed,
+        generation: team.rows[0].generation,
+        legendary: team.rows[0].legendary,
+        description: team.rows[0].description,
+        image: team.rows[0].image,
+        nickname: team.rows[0].nickname
+    }
+    req.session.team.pokemons.push(pokemon)
+    console.log(req.session.team)
+        // on envoie la team de pokémons du user au client.
+    res.json(pokemon)
+    return
 })
 
 /**

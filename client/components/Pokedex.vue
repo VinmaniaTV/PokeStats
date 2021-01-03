@@ -56,6 +56,7 @@
           <div>
             <button @click="deletePokemon(pokemon.id)">Supprimer</button>
             <button @click="editPokemon(pokemon)">Modifier</button>
+            <button @click="addToPc(pokemon.id)" v-if="connected">Ajouter au PC</button>
           </div>
         </div>
         <div class="pokemon-content" v-else>
@@ -205,6 +206,9 @@ module.exports = {
         description: "",
         image: "",
       };
+    },
+    addToPc (pokemonId) {
+      this.$emit('add-to-pc', pokemonId)
     },
     logOut() {
       this.$emit("log-out");
