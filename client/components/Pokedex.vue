@@ -35,28 +35,32 @@
               :style="{ backgroundImage: 'url(../img/unknownPokemon.png)' }"
             ></div>
           </router-link>
-          <h3>Type :</h3>
           <div class="pokemon-type">
-            <div
-              class="type"
-              :style="{
-                backgroundImage:
-                  'url(\'../img/type/' + pokemon.type1 + '.png\')',
-              }"
-            ></div>
-            <div
-              class="type"
-              v-if="pokemon.type2 !== null"
-              :style="{
-                backgroundImage:
-                  'url(\'../img/type/' + pokemon.type2 + '.png\')',
-              }"
-            ></div>
+            <h3>Type:</h3>
+            <div class="pokemon-type-img">
+              <div
+                class="type"
+                :style="{
+                  backgroundImage:
+                    'url(\'../img/type/' + pokemon.type1 + '.png\')',
+                }"
+              ></div>
+              <div
+                class="type"
+                v-if="pokemon.type2 !== null"
+                :style="{
+                  backgroundImage:
+                    'url(\'../img/type/' + pokemon.type2 + '.png\')',
+                }"
+              ></div>
+            </div>
           </div>
-          <div>
+          <div class="pokemon-button">
             <button @click="deletePokemon(pokemon.id)">Supprimer</button>
             <button @click="editPokemon(pokemon)">Modifier</button>
-            <button @click="addToPc(pokemon.id)" v-if="connected">Ajouter au PC</button>
+            <button @click="addToPc(pokemon.id)" v-if="connected">
+              Ajouter au PC
+            </button>
           </div>
         </div>
         <div class="pokemon-content" v-else>
@@ -207,8 +211,8 @@ module.exports = {
         image: "",
       };
     },
-    addToPc (pokemonId) {
-      this.$emit('add-to-pc', pokemonId)
+    addToPc(pokemonId) {
+      this.$emit("add-to-pc", pokemonId);
     },
     logOut() {
       this.$emit("log-out");
@@ -243,17 +247,16 @@ section nav h2 {
 section article {
   margin: 0 10%;
   background-color: #eeeeee;
+  border-radius: 40px;
 }
 
 section div h3 {
-  font-size: 30px;
-  padding: 40px;
-  font-weight: 900;
+  font-size: 20px;
+  font-weight: 500;
   letter-spacing: 0.966667px;
   line-height: 16.8px;
   position: relative;
-  left: 1em;
-  top: calc(100% - 70px);
+  right: 20px;
 }
 
 section h1 {
@@ -263,7 +266,6 @@ section ul li {
   list-style-type: none;
   color: green;
   background-color: rgb(216, 210, 210);
-  padding: 10px;
   font-size: 30px;
   border-radius: 1em;
   font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
@@ -283,7 +285,6 @@ section .type {
 
 section .pokemon-content {
   display: flex;
-  justify-content: space-between;
 }
 
 section .pokemon-title {
@@ -301,7 +302,35 @@ section .pokemon-img {
   background-size: cover;
 }
 
+section .pokemon-essential {
+  color: black;
+  width: 100%;
+  margin: 10px;
+}
+
+section .pokemon-essential:hover {
+  color: #F93D32;
+  text-decoration: none;
+}
+
 section .pokemon-type {
   display: flex;
+  align-items: center;
+  margin: 0 20px;
+}
+
+section .pokemon-type-img {
+  display: flex;
+  width: 140px;
+}
+
+section .pokemon-button {
+  display: flex;
+  align-items: center;
+  margin: 0 10px;
+}
+
+section .pokemon-button button {
+  margin: 0 5px;
 }
 </style>
