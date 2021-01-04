@@ -78,6 +78,7 @@ var app = new Vue({
             }
             const res = await axios.post('/api/pc', pokemon)
             this.team.pokemons.push(res.data)
+            router.push('/me')
         },
         async addUser(newUser) {
             if (await axios.post('/api/register/', newUser)

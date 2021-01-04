@@ -1,6 +1,9 @@
 <template>
-  <div>
+  <div class="main">
     <navbar @log-out="logOut" :connected="connected"></navbar>
+    <div class="pokemon-info-banner">
+      <h2>Informations</h2>
+    </div>
     <section v-if="!modifying">
       <article>
         <div class="pokemon-name">
@@ -20,6 +23,15 @@
               ')',
           }"
         ></div>
+        <button
+        @click="
+          editPokemon(
+            pokedex[pokedex.findIndex((i) => i.id == $route.params.id)]
+          )
+        "
+      >
+        Modifier les informations
+      </button>
       </article>
       <aside>
         <div class="pokemon-no">
@@ -140,7 +152,6 @@
           </p>
         </div>
       </aside>
-      <button @click="editPokemon(pokedex[pokedex.findIndex((i) => i.id == $route.params.id)])">Modifier les informations</button>
     </section>
     <section v-else>
       <article>
@@ -244,13 +255,16 @@
           </div>
           <div class="pokemon-legendary">
             <h4>Légendaire</h4>
-            <input type="checkbox" id="legendary-checkbox" v-model="editingPokemon.legendary" />
+            <input
+              type="checkbox"
+              id="legendary-checkbox"
+              v-model="editingPokemon.legendary"
+            />
           </div>
         </div>
         <div class="pokemon-description">
           <h4>Description</h4>
-          <textarea v-model="editingPokemon.description">
-          </textarea>
+          <textarea v-model="editingPokemon.description"> </textarea>
         </div>
       </aside>
       <button @click="sendEditPokemon()">Valider</button>
@@ -343,3 +357,86 @@ module.exports = {
   },
 };
 </script>
+
+<style scoped>
+.main {
+  height: calc(100vh - 236px);
+  background-color: #bfbfbf;
+}
+
+.pokemon-info-banner {
+  background-color: #64A4D8;
+  border-bottom: 2px solid #4888C0;
+}
+
+.pokemon-info-banner h2 {
+  color: white;
+  text-shadow: 1px 1px black;
+  padding: 5px 3px 3px 3px;
+  margin-left: 5px;
+}
+
+section {
+  display: flex;
+  height: calc(100% - 124px);
+}
+
+article {
+  width: 40%;
+  display: flex;
+  flex-direction: column;
+  align-content: space-between;
+}
+
+article .pokemon-name {
+  background-color: #dcb880;
+  margin: 2em 5px 0 5px;
+  border-radius: 20px;
+}
+
+article h3 {
+  color: white;
+  text-shadow: 1px 1px black;
+  padding: 10px;
+  margin-left: 15px;
+  margin-bottom: 5px;
+}
+
+article .pokemon-image {
+  height: 100%;
+  background-size: contain;
+  background-repeat: no-repeat;
+}
+
+aside {
+  width: 60%;
+  height: 100%;
+}
+
+aside div:nth-child(odd) {
+  background-color: #94C49C;
+}
+
+aside div:nth-child(even) {
+  background-color: #84AC88;
+}
+
+.pokemon-no,
+.pokemon-type,
+.pokemon-hp,
+.pokemon-attack,
+.pokemon-defense,
+.pokemon-spatk,
+.pokemon-spdef,
+.pokemon-speed,
+.pokemon-generation,
+.pokemon-legendary {
+  display: flex;
+}
+
+.type {
+  width: 70px;
+  height: 15px;
+  align-self: center;
+}
+</style>
