@@ -6,6 +6,7 @@
 
 # DataBase Creation :
 
+```
 CREATE DATABASE "PokeStats"
     WITH 
     OWNER = postgres
@@ -56,6 +57,7 @@ CREATE TABLE public.pokedex
     image text,
     PRIMARY KEY (id)
 );
+```
 
 # Run
 
