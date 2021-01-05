@@ -59,6 +59,14 @@ CREATE TABLE public.pokedex
 );
 ```
 
+Importer le pokédex :
+
+(Ne pas oublier de remplacer [PATH] par le chemin du fichier `pokedexcomplete.csv`)
+
+```
+copy public.pokedex (no, name, type1, type2, total, hp, attack, defense, spatk, spdef, speed, generation, legendary) FROM '[PATH]/pokedexcomplete.CSV' DELIMITER ',' CSV HEADER QUOTE '\"' ESCAPE '''';
+```
+
 # Run
 
 `npm start`
