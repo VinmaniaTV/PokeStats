@@ -119,6 +119,8 @@ section .content {
 
 article,
 aside {
+  font-variant:initial;
+  font-size: 20px;
   flex: 1;
 }
 
@@ -139,11 +141,12 @@ section article {
 }
 
 #us {
+  background-color:oldlace;  
   padding: 50px 0;
 }
 
 #about {
-  background-color: #efefef;
+  background-color:oldlace;
   padding: 50px 0;
 }
 

@@ -222,8 +222,23 @@ module.exports = {
 </script>
 
 <style scoped>
+
+button{
+
+  border-color:black;
+  background-color:gold;
+  font-weight: 600;
+  font-variant:small-caps;
+  border-radius: 10px;
+  margin-left: 50em;
+
+  
+  
+
+}
 section {
-  background-color: #fcfcfc;
+  background-color: oldlace;
+  left: 10%;
 }
 
 section nav {
@@ -233,18 +248,21 @@ section nav {
 }
 
 section nav h2 {
+
+  color:black;
   font-family: "Montserrat", sans-serif;
-  font-size: 40px;
+  font-size: 60px;
   margin: 0;
   font-weight: 900;
   letter-spacing: 0.966667px;
   line-height: 16.8px;
   position: relative;
-  left: 1em;
+  left: 9em;
   top: calc(100% - 70px);
 }
 
 section article {
+  color: rgba(2, 1, 0, 0.726);
   margin: 0 10%;
   background-color: #eeeeee;
   border-radius: 40px;
@@ -292,6 +310,7 @@ section .pokemon-title {
 }
 
 section .pokemon-title h2 {
+  color: D35222;
   margin: 10px;
   font-size: 20px;
 }
@@ -305,7 +324,8 @@ section .pokemon-img {
 section .pokemon-essential {
   color: black;
   width: 100%;
-  margin: 10px;
+  margin: 30px;
+ 
 }
 
 section .pokemon-essential:hover {
@@ -325,12 +345,20 @@ section .pokemon-type-img {
 }
 
 section .pokemon-button {
+  border-radius: 10px;
   display: flex;
   align-items: center;
   margin: 0 10px;
+  border : 10px;
 }
 
 section .pokemon-button button {
+  border-color:black;
+  background-color:gold;
+  font-weight: 600;
+  font-variant:small-caps;
   margin: 0 5px;
+  border-radius: 10px;
+
 }
 </style>
