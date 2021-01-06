@@ -19,33 +19,27 @@
         <h3>Qui sommes-nous ?</h3>
         <div class="element content">
           <article>
-            Nous sommes une équipe de 3 étudiants en cursus ingénieur à EFREI
-            Paris.<br />Nous aspirons à proposer Dianalysis comme projet afin de
-            montrer que Technologie peut rimer avec Santé tout en proposant un
-            service pouvant facilier la vie des patients.<br />
+            Nous sommes une équipe de 2 étudiants en cursus ingénieur à EFREI
+            Paris.<br />Nous aspirons à proposer PokéStats un site qui vous permet de répertorier tout vos Pokémons.<br />
             Notre devise : "Des outils pour tous, un monde meilleur."
           </article>
           <aside>
-            <img src="./img/efrei.jpg" alt="img" />
+            <img src="./img/pokemon.jpg" alt="img" />
           </aside>
         </div>
       </div>
       <div id="about">
-        <h3>Ce que propose Dianalysis</h3>
+        <h3>Ce que propose PokéStats</h3>
         <div class="element">
-          <h4>Un suivi de son alimentation</h4>
+          <h4>Un suivi de son répertoire de Pokémons</h4>
           <div class="content">
             <aside>
-              <img src="./img/stats.jpg" alt="img" />
+              <img src="./img/pokemon1.jpg" alt="img" />
             </aside>
             <article>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-              eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-              enim ad minim veniam, quis nostrud exercitation ullamco laboris
-              nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in
-              reprehenderit in voluptate velit esse cillum dolore eu fugiat
-              nulla pariatur. Excepteur sint occaecat cupidatat non proident,
-              sunt in culpa qui officia deserunt mollit anim id est laborum.
+              Un Pokédex est à disposition afin d'avoir toutes les informations nécessaires pour chaque Pokémons. 
+              En ajoutant depuis le Pokédex, les Pokémons sont classés par ordre d'ajouts avec: Surnom, Type et le nom du pokémon.
+
             </article>
           </div>
         </div>
@@ -53,36 +47,15 @@
           <h4>Des conseils adaptés</h4>
           <div class="content">
             <article>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-              eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-              enim ad minim veniam, quis nostrud exercitation ullamco laboris
-              nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in
-              reprehenderit in voluptate velit esse cillum dolore eu fugiat
-              nulla pariatur. Excepteur sint occaecat cupidatat non proident,
-              sunt in culpa qui officia deserunt mollit anim id est laborum.
+              Lors de chaque session de jeu, une rentrée de chaque Pokémons dans le Pokédex peut être optimal pour une meilleur gestion de ses créatures !
+              N'oubliez pas : " L'organisation induit l'éfficacité ! "
+
             </article>
             <aside>
-              <img src="./img/advices.jpg" alt="img" />
+              <img src="./img/choix.jpg" alt="img" />
             </aside>
           </div>
-        </div>
-        <div class="element">
-          <h4>Un large panel d'informations</h4>
-          <div class="content">
-            <aside>
-              <img src="./img/knowledges.jpg" alt="img" />
-            </aside>
-            <article>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-              eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-              enim ad minim veniam, quis nostrud exercitation ullamco laboris
-              nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in
-              reprehenderit in voluptate velit esse cillum dolore eu fugiat
-              nulla pariatur. Excepteur sint occaecat cupidatat non proident,
-              sunt in culpa qui officia deserunt mollit anim id est laborum.
-            </article>
-          </div>
-        </div>
+        
       </div>
     </section>
   </div>
