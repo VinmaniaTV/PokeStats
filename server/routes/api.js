@@ -194,6 +194,7 @@ router.post('/pc', async(req, res) => {
  */
 async function parsePc(req, res, next) {
     const pcId = parseInt(req.params.pcId)
+    console.log(pcId)
 
     // si pcId n'est pas un nombre (NaN = Not A Number), alors on s'arrête
     if (isNaN(pcId)) {
@@ -203,7 +204,7 @@ async function parsePc(req, res, next) {
     // on affecte req.pcId pour l'exploiter dans toutes les routes qui en ont besoin
     req.pcId = pcId
 
-    const sql = "SELECT * FROM pokedex WHERE id = $1"
+    const sql = "SELECT * FROM pokedex INNER JOIN pc ON pokedex.id = pc.pokemonid WHERE pc.id = $1"
     const pokemonSQL = await client.query({ // notez le "await" car la fonction est asynchrone
         text: sql,
         values: [pcId]
