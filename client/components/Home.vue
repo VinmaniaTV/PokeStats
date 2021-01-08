@@ -38,7 +38,7 @@
             </aside>
             <article>
               Un Pokédex est à disposition afin d'avoir toutes les informations nécessaires pour chaque Pokémon. 
-              En ajoutant depuis le Pokédex, les Pokémons sont classés par ordre d'ajouts avec: Surnom, Type et le nom du pokémon.
+              En ajoutant depuis le Pokédex, les Pokémons sont classés par ordre d'ajout avec: Surnom, Type et le nom du Pokémon.
 
             </article>
           </div>
@@ -48,7 +48,7 @@
           <div class="content">
             <article>
               Lors de chaque session de jeu, une rentrée de chaque Pokémon dans le Pokédex peut être optimal pour une meilleur gestion de ses créatures !
-              N'oubliez pas : " L'organisation induit l'efficacitée ! "
+              N'oubliez pas : " L'organisation induit l'éfficacité ! "
 
             </article>
             <aside>
