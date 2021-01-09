@@ -100,6 +100,7 @@ var app = new Vue({
                         document.getElementById('errorLogInMessage').innerHTML = "La combinaison est incorrecte.";
                     }
                 })
+            console.log(userTeam)
             if (userTeam.status === 200) {
                 this.team = userTeam.data;
                 this.connected = true;

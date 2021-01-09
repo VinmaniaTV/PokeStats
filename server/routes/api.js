@@ -7,7 +7,7 @@ const { Client } = require('pg')
 const client = new Client({
     user: 'postgres',
     host: 'localhost',
-    password: 'wpwpttwpwpw',
+    password: 'admin',
     database: 'PokeStats'
 })
 
@@ -441,9 +441,15 @@ router.route('/pokemon/:pokemonId')
 .delete(parsePokemon, async(req, res) => {
     const id = parseInt(req.params.pokemonId)
 
-    const sql = "DELETE FROM pokedex WHERE id = $1"
+    const sqlPokedex = "DELETE FROM pokedex WHERE id = $1"
     await client.query({ // notez le "await" car la fonction est asynchrone
-        text: sql,
+        text: sqlPokedex,
+        values: [id]
+    })
+
+    const sqlPc = "DELETE FROM pc WHERE pokemonid = $1"
+    await client.query({ // notez le "await" car la fonction est asynchrone
+        text: sqlPc,
         values: [id]
     })
 
