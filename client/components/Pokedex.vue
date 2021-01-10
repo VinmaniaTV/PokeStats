@@ -9,7 +9,7 @@
         @add-pokemon="addPokemon"
         :show="showNewPokemon"
       ></add-pokemon>
-      <button @click="showNewPokemon = !showNewPokemon" v-if="!showNewPokemon">
+      <button id="ajouter-pokemon" @click="showNewPokemon = !showNewPokemon" v-if="!showNewPokemon">
         Ajouter un nouveau Pokémon
       </button>
       <button @click="showNewPokemon = !showNewPokemon" v-else>Annuler</button>
@@ -222,6 +222,8 @@ module.exports = {
 </script>
 
 <style scoped>
+
+
 button {
   border-color: black;
   background-color: gold;
@@ -253,6 +255,7 @@ section nav h2 {
   position: relative;
   left: 9em;
   top: calc(100% - 70px);
+  max-width: 100em;
 }
 
 section article {
@@ -353,5 +356,8 @@ section .pokemon-button button {
   font-variant: small-caps;
   margin: 0 5px;
   border-radius: 10px;
+  max-width: 60%;
 }
+
+
 </style>

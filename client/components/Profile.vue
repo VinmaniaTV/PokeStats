@@ -17,7 +17,7 @@
               <h2 v-if="pokemon.nickname !== null && pokemon.nickname !== ''">
                 {{ pokemon.nickname }}
               </h2>
-              <h2 v-else>{{ pokemon.name }}</h2>
+              <h2 v-else>{{pokemon.name }}</h2>
             </div>
             <div
               class="pokemon-img"
@@ -156,14 +156,16 @@ module.exports = {
 </script>
 
 <style scoped>
-section article {
+
+  
+  section article {
   color: rgba(2, 1, 0, 0.726);
   margin: 0 10%;
   background-color: #eeeeee;
   border-radius: 40px;
 }
 
-#mespokémons {
+  #mespokémons {
   color: black;
   font-family: "Montserrat", sans-serif;
   font-size: 35px;
@@ -172,8 +174,8 @@ section article {
   position: relative;
   left: 3em;
 }
-
-button {
+  
+  button  {
   border-color: black;
   background-color: gold;
   font-weight: 600;
@@ -181,57 +183,58 @@ button {
   border-radius: 10px;
 }
 
-div#first {
+  div#first {
   background-color: rgb(187, 170, 170);
 }
 
-div#first div {
+  div#first div {
   display: inline-block;
   width: 48%;
 }
 
-div#first div.gauche {
+  div#first div.gauche {
   background-color: rgb(185, 178, 178);
 }
 
-div#first div.droite {
+  div#first div.droite {
   vertical-align: top;
 }
 
-div#first div h6,
+  div#first div h6,
 h3,
 input {
   margin-left: 35px;
   margin-bottom: 10px;
 }
 
-.pokemon-content {
+  .pokemon-content {
   display: flex;
+  
 }
 
-section .pokemon-img {
+  section .pokemon-img {
   width: 80px;
   height: 80px;
   background-size: cover;
 }
 
-section .type {
+  section .type {
   height: 15px;
   width: 70px;
 }
 
-section .pokemon-type {
+  section .pokemon-type {
   display: flex;
   align-items: center;
   margin: 0 20px;
 }
 
-section .pokemon-type-img {
+  section .pokemon-type-img {
   display: flex;
   width: 140px;
 }
 
-section .pokemon-button {
+  section .pokemon-button  {
   border-radius: 10px;
   display: flex;
   align-items: center;
@@ -239,11 +242,13 @@ section .pokemon-button {
   border: 10px;
 }
 
-article h2 {
+  article h2 {
   font-size: 20px;
 }
 
-article h3 {
+  article h3 {
   font-size: 18px;
+
 }
+
 </style>
