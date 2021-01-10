@@ -100,12 +100,15 @@ var app = new Vue({
                         document.getElementById('errorLogInMessage').innerHTML = "La combinaison est incorrecte.";
                     }
                 })
+
             console.log(userTeam)
             if (userTeam.status === 200) {
+                console.log('fk')
                 this.team = userTeam.data;
                 this.connected = true;
                 router.push('/')
             }
+            console.log('emem')
         },
         async logOut() {
             if (await axios.post('/api/logout/')

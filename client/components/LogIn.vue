@@ -1,6 +1,6 @@
 <template>
   <div>
-    <navbar @log-out="logOut" :connected="connected"></navbar>
+    <navbar  :connected="connected" @log-out="logOut"></navbar>
     <section>
       <div id="container">
         <!-- zone de connexion -->

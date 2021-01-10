@@ -7,7 +7,7 @@ const { Client } = require('pg')
 const client = new Client({
     user: 'postgres',
     host: 'localhost',
-    password: 'adame14789632',
+    password: 'admin',
     database: 'PokeStats'
 })
 
@@ -82,6 +82,7 @@ router.post('/login', async(req, res) => {
 
     if (checkExists.rowCount === 0) {
         res.status(400).json({ message: 'user doesn\'t exists' })
+        res.send();
         return
     }
 
@@ -117,11 +118,10 @@ router.post('/login', async(req, res) => {
             req.session.team.pokemons.push(pokemon)
         });
         // on envoie la team de pokémons du user au client.
-        res.json(req.session.team)
-        return
+        return res.json(req.session.team)
     } else {
-        res.status(401).json({ message: 'wrong password' })
-        return
+        return res.status(401).json({ message: 'wrong password' })
+
     }
 })
 

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <navbar @log-out="logOut" :connected="connected"></navbar>
+    <navbar :connected="connected" @log-out="logOut"></navbar>
     <div id="showcase">
       <div>
         <h1>Bienvenue sur PokéStats</h1>
@@ -120,7 +120,7 @@ section .content {
 article,
 aside {
   font-variant:initial;
-  font-size: 20px;
+  font-size: 18px;
   flex: 1;
 }
 
@@ -141,12 +141,13 @@ section article {
 }
 
 #us {
-  background-color:oldlace;  
+  /* background-color:oldlace; */
   padding: 50px 0;
 }
 
 #about {
-  background-color:oldlace;
+  /* background-color:oldlace; */
+  background-color: #efefef;
   padding: 50px 0;
 }
 

@@ -1,6 +1,6 @@
 <template>
   <div class="main">
-    <navbar @log-out="logOut" :connected="connected"></navbar>
+    <navbar :connected="connected" @log-out="logOut"></navbar>
     <div class="pokemon-info-banner">
       <h2>Informations</h2>
     </div>
@@ -15,6 +15,11 @@
         </div>
         <div
           class="pokemon-image"
+          v-if="
+                pokedex[pokedex.findIndex((i) => i.id == $route.params.id)].image != null &&
+                pokedex[pokedex.findIndex((i) => i.id == $route.params.id)].image != 'null' &&
+                pokedex[pokedex.findIndex((i) => i.id == $route.params.id)].image != ''
+              "
           :style="{
             backgroundImage:
               'url(' +
@@ -23,6 +28,11 @@
               ')',
           }"
         ></div>
+        <div
+              class="pokemon-image"
+              v-else
+              :style="{ backgroundImage: 'url(../img/unknownPokemon.png)' }"
+            ></div>
         <button
         @click="
           editPokemon(

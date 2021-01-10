@@ -1,6 +1,6 @@
 <template>
   <div>
-    <navbar @log-out="logOut" :connected="connected"></navbar>
+    <navbar :connected="connected" @log-out="logOut"></navbar>
     <section>
       <nav>
         <h2>Pokédex</h2>
@@ -222,20 +222,15 @@ module.exports = {
 </script>
 
 <style scoped>
-
-button{
-
-  border-color:black;
-  background-color:gold;
+button {
+  border-color: black;
+  background-color: gold;
   font-weight: 600;
-  font-variant:small-caps;
+  font-variant: small-caps;
   border-radius: 10px;
   margin-left: 50em;
-
-  
-  
-
 }
+
 section {
   background-color: oldlace;
   left: 10%;
@@ -248,8 +243,7 @@ section nav {
 }
 
 section nav h2 {
-
-  color:black;
+  color: black;
   font-family: "Montserrat", sans-serif;
   font-size: 60px;
   margin: 0;
@@ -288,10 +282,12 @@ section ul li {
   border-radius: 1em;
   font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
 }
+
 section ul li:hover {
   background-color: rgb(65, 221, 65);
   transition: 0 2s all;
 }
+
 section a.nav {
   text-decoration: none;
 }
@@ -310,7 +306,6 @@ section .pokemon-title {
 }
 
 section .pokemon-title h2 {
-  color: D35222;
   margin: 10px;
   font-size: 20px;
 }
@@ -325,11 +320,10 @@ section .pokemon-essential {
   color: black;
   width: 100%;
   margin: 30px;
- 
 }
 
 section .pokemon-essential:hover {
-  color: #F93D32;
+  color: #f93d32;
   text-decoration: none;
 }
 
@@ -349,16 +343,15 @@ section .pokemon-button {
   display: flex;
   align-items: center;
   margin: 0 10px;
-  border : 10px;
+  border: 10px;
 }
 
 section .pokemon-button button {
-  border-color:black;
-  background-color:gold;
+  border-color: black;
+  background-color: gold;
   font-weight: 600;
-  font-variant:small-caps;
+  font-variant: small-caps;
   margin: 0 5px;
   border-radius: 10px;
-
 }
 </style>
