@@ -48,7 +48,7 @@
           <div class="content">
             <article>
               Lors de chaque session de jeu, une rentrée de chaque Pokémon dans le Pokédex peut être optimal pour une meilleur gestion de ses créatures !
-              N'oubliez pas : " L'organisation induit l'éfficacité ! "
+              N'oubliez pas : " L'organisation induit l'efficacitée ! "
 
             </article>
             <aside>

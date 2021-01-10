@@ -17,8 +17,9 @@
         <div class="pokemon-content" v-if="editingPokemon.id !== pokemon.id">
           <router-link class="pokemon-essential" :to="'/pokemon/' + pokemon.id">
             <div class="pokemon-title">
-              <h2>No.{{ pokemon.no }}</h2>
               <h2>{{ pokemon.name }}</h2>
+              <h2>No.{{ pokemon.no }}</h2>
+              
             </div>
             <div
               class="pokemon-img"

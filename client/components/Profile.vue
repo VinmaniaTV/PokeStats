@@ -6,6 +6,7 @@
       <article v-for="pokemon in team.pokemons" :key="pokemon.teamid">
         <div class="pokemon-content" v-if="editingNickname.id !== pokemon.teamid">
           <router-link class="pokemon-essential" :to="'/pokemon/' + pokemon.id">
+          
             <div class="pokemon-nickname">
               <h2 v-if="pokemon.nickname !== null && pokemon.nickname !== ''">{{ pokemon.nickname }}</h2>
               <h2 v-else>{{ pokemon.name }}</h2>
@@ -144,8 +145,20 @@ module.exports = {
 </script>
 
 <style scoped>
+
+button {
+border-color:black;
+background-color:gold;
+font-weight: 600;
+font-variant:small-caps;
+border-radius: 10px;
+
+}
+
+
+
 div#first {
-  background-color: rgb(141, 128, 128);
+  background-color: rgb(187, 170, 170);
 }
 div#first div {
   display: inline-block;
