@@ -57,7 +57,6 @@ module.exports = {
   methods: {
     logIn() {
       this.$emit("log-in", this.user);
-      this.connected = true;
     },
     logOut () {
       this.$emit('log-out')

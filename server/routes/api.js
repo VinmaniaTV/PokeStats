@@ -81,8 +81,7 @@ router.post('/login', async(req, res) => {
     })
 
     if (checkExists.rowCount === 0) {
-        res.status(400).json({ message: 'user doesn\'t exists' })
-        res.send();
+        res.status(400).json({ message: 'user doesn\'t exists' });
         return
     }
 
