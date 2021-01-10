@@ -19,7 +19,6 @@
             <div class="pokemon-title">
               <h2>{{ pokemon.name }}</h2>
               <h2>No.{{ pokemon.no }}</h2>
-              
             </div>
             <div
               class="pokemon-img"

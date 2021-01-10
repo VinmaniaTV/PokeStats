@@ -2,9 +2,14 @@
   <div>
     <navbar @log-out="logOut" :connected="connected"></navbar>
     <section>
-      <h2>Mes Pokémons</h2>
+      <h2 id="mespokémons">Mes Pokémons</h2>
       <article v-for="pokemon in team.pokemons" :key="pokemon.teamid">
         <div class="pokemon-content" v-if="editingNickname.id !== pokemon.teamid">
+          <div class="pokemon-title">
+             <h2>No.{{ pokemon.no }} {{ pokemon.name }}</h2>
+          
+            </div>
+          
           <router-link class="pokemon-essential" :to="'/pokemon/' + pokemon.id">
           
             <div class="pokemon-nickname">
@@ -25,13 +30,12 @@
               v-else
               :style="{ backgroundImage: 'url(../img/unknownPokemon.png)' }"
             ></div>
+            
           </router-link>
+          
+          <h3 id="type">Type :</h3>
           <button @click="editNickname(pokemon)">Modifier le surnom</button>
-          <h3>Type :</h3>
-          <div class="pokemon-title">
-              <h2>No.{{ pokemon.no }}</h2>
-              <h2>{{ pokemon.name }}</h2>
-            </div>
+          
           <div class="pokemon-type">
             <div
               class="type"
@@ -74,10 +78,7 @@
           <button @click="sendEditNickname()">Valider</button>
           <button @click="abortEditNickname()">Annuler</button>
           <h3>Type :</h3>
-          <div class="pokemon-title">
-              <h2>No.{{ pokemon.no }}</h2>
-              <h2>{{ pokemon.name }}</h2>
-            </div>
+          
           <div class="pokemon-type">
             <div
               class="type"
@@ -146,6 +147,24 @@ module.exports = {
 
 <style scoped>
 
+
+#type{
+margin: 0;
+}
+
+
+#mespokémons{
+
+color:black;
+font-family: "Montserrat", sans-serif;
+font-size: 35px;
+margin: 0;
+font-weight: 600;
+position: relative;
+left: 3em;
+
+}
+
 button {
 border-color:black;
 background-color:gold;
@@ -155,10 +174,8 @@ border-radius: 10px;
 
 }
 
-
-
 div#first {
-  background-color: rgb(187, 170, 170);
+background-color: rgb(187, 170, 170);
 }
 div#first div {
   display: inline-block;
