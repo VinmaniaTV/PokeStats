@@ -51,7 +51,7 @@ module.exports = {
     Navbar,
   },
   props: {
-    connected: { type: Boolean }
+    connected: { type: Boolean },
   },
   data() {
     return {
@@ -75,9 +75,9 @@ module.exports = {
           "Mot de passe non identique.";
       }
     },
-    logOut () {
-      this.$emit('log-out')
-    }
+    logOut() {
+      this.$emit("log-out");
+    },
   },
 };
 </script>
@@ -85,7 +85,7 @@ module.exports = {
 <style scoped>
 section {
   background: linear-gradient(#071e38, #040614);
-  height: calc(100vh - 371px);
+  height: calc(100vh - 305px);
   min-height: 550px;
   display: flex;
   align-items: center;
